@@ -109,10 +109,6 @@ public class CSVUtil {
         else
             parser = new RegxParser( config );
 
-        parser.setDelimiter( config.getDelimiter() );
-        parser.setEscape( config.getEscape() );
-        parser.setNewLine( config.getLinebreak() );
-
         CsvWriterSettings wst = new CsvWriterSettings();
         CsvWriter writer = new CsvWriter(outFile, wst);
 

@@ -7,9 +7,6 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractParser implements IParserWrapper {
 
-    char delimiter;
-    char escape;
-    char newLine;
     Map<Integer, Pattern> patterns;
     Config config;
 
@@ -19,71 +16,14 @@ public abstract class AbstractParser implements IParserWrapper {
         patterns = new HashMap<>();
     }
 
-    public char getStringBound() {
-        return stringBound;
-    }
-
-    char stringBound;
-
-    public char getSplitChar() {
-        return splitChar;
-    }
-
-    char splitChar;
-
-    protected Integer[] indexes;
-
-    public char getDelimiter() {
-        return delimiter;
-    }
-
-    public char getEscape() {
-        return escape;
-    }
-
-    public char getNewLine() {
-        return newLine;
-    }
-
     @Override
     public void setProperty(String key, String value) {
 
     }
 
     @Override
-    public void setDelimiter(char val) {
-        delimiter = val;
-    }
-
-    @Override
-    public void setEscape(char escape) {
-        this.escape = escape;
-    }
-
-    @Override
-    public void setNewLine(char newline) {
-        this.newLine = newline;
-    }
-
-    @Override
-    public void setColumnsToSplit(Integer[] indexes) {
-        this.indexes = indexes.clone();
-    }
-
-    @Override
-    public void setSplitChar(char val) {
-        this.splitChar = splitChar;
-    }
-
-    @Override
     public void close() {
 
-    }
-
-    @Override
-    public void setStringBound( char symbol )
-    {
-        stringBound = symbol;
     }
 
     public Pattern getPatternForColumn(int index )

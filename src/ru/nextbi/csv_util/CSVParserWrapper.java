@@ -29,13 +29,4 @@ public class CSVParserWrapper extends AbstractParser {
         return parser.parseNext();
     }
 
-    @Override
-    public void setProperty(String key, String value) {
-
-    }
-
-    @Override
-    public void close() {
-
-    }
 }

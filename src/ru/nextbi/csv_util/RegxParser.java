@@ -109,7 +109,7 @@ public class RegxParser extends AbstractParser {
             return null;
 
         StringBuffer sb = new StringBuffer();
-        while ((b = stream.read()) != newLine) {
+        while ((b = stream.read()) != config.getLinebreak()) {
             if (b == -1) {
                 EOF = true;
                 break;
