@@ -18,6 +18,7 @@ public class CSVUtil {
     File outFile;
     List<String[]> current = new ArrayList<>();
     List<String[]> subResult = new ArrayList<>();
+    long rowCount;
 
     public void setInFile(File inFile) {
         this.inFile = inFile;
@@ -113,6 +114,7 @@ public class CSVUtil {
         CsvWriter writer = new CsvWriter(outFile, wst);
 
         FileInputStream fis = new FileInputStream(inFile);
+        rowCount = 0;
         parser.startParse(fis);
         String[] row;
         List<String[]> rows = new ArrayList<>();
@@ -120,8 +122,9 @@ public class CSVUtil {
             writer.writeHeaders(parser.parseNext());
         }
 
+        Integer[] cols = config.getSplitColumns();
         while ((row = parser.parseNext()) != null) {
-            Integer[] cols = config.getSplitColumns();
+            rowCount++;
             if ( cols != null && cols.length != 0)
                 split(cols, rows, row);
             else
@@ -152,17 +155,24 @@ public class CSVUtil {
     }
 
     private Collection<? extends String[]> splitCol(Integer index, String[] row) {
-        String rawValue = row[index];
-        String[] values = rawValue.split( "" + config.getSplitChar() );
-
         List<String[]> rows = new ArrayList<>();
 
-        for (String value : values) {
-            String[] rowCopy = row.clone();
-            rowCopy[index] = value;
-            rows.add(rowCopy);
+        if( index >= row.length)
+        {
+            System.out.println( "Can't split row. " + rowCount + "Colums index " + index + ". Row " + row.toString()  );
         }
+        else {
+            String rawValue = row[index];
+            if( rawValue == null )
+                rawValue = "";
+            String[] values = rawValue.split( config.getSplitChar());
 
+            for( String value : values ) {
+                String[] rowCopy = row.clone();
+                rowCopy[index] = value;
+                rows.add(rowCopy);
+            }
+        }
         return rows;
     }
 

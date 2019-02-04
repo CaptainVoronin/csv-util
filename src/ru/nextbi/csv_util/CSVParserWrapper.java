@@ -14,6 +14,7 @@ public class CSVParserWrapper extends AbstractParser {
         settings.getFormat().setDelimiter( ',' );
         settings.getFormat().setQuoteEscape( '\\' );
         settings.getFormat().setLineSeparator( "\n" );
+        settings.setMaxCharsPerColumn( 20000 );
 
     }
     @Override

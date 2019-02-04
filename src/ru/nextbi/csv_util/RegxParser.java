@@ -58,9 +58,16 @@ public class RegxParser extends AbstractParser {
     @Override
     public String[] parseNext() throws IOException {
         String[] arr = null;
-        String line = readLine();
-        if (line == null)
-            return null;
+        String line;
+        while( true ) {
+            line = readLine();
+            if( line == null )
+                return null;
+
+            line = line.trim();
+            if( line.length() != 0 )
+                break;
+        }
 
         if( hasHeaders && !headersParsed )
         {
@@ -95,7 +102,8 @@ public class RegxParser extends AbstractParser {
 
     private String[] parseHeaders(String line)
     {
-        String regexp = config.getDefaultSplitRegexp();
+        String regexp = String.format( config.getDefaultSplitRegexp(), config.getHeaderSplitChar() );
+
         String[] arr = line.split( regexp );
         for( int i = 0; i < arr.length; i++  )
             arr[i] = arr[i].trim();

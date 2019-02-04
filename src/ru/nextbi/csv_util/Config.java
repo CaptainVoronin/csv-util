@@ -30,7 +30,9 @@ public class Config {
     // default regex for extracting strings between quates
     public static final String VALUEEXTRACTOR = "valueextractor";
 
-    public static final String defaultSplitRegexp = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+    public static final String defaultSplitRegexp = "%s(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+
+    public static final String HEADERSPLITCHAR = "headersplitchar";
 
     File file;
     Properties props;
@@ -104,9 +106,9 @@ public class Config {
         return props.getProperty( REGEX, defaultSplitRegexp );
     }
 
-    public char getSplitChar()
+    public String getSplitChar()
     {
-        return props.getProperty( SPLITCHAR, "," ).charAt( 0 );
+        return props.getProperty( SPLITCHAR, "," );
     }
 
     public Integer[] getSplitColumns()
@@ -114,7 +116,7 @@ public class Config {
         String buff = props.getProperty( SPLITCOLUMS );
         Integer[] cols = null;
         if( buff != null ) {
-            String[] items = buff.split("" + getSplitChar());
+            String[] items = buff.split( getSplitChar());
             cols = new Integer[items.length];
             for (int i = 0; i < items.length; i++)
                 cols[i] = Integer.parseInt(items[i]);
@@ -136,5 +138,10 @@ public class Config {
     public String getDefaultSplitRegexp()
     {
         return defaultSplitRegexp;
+    }
+
+    public String getHeaderSplitChar()
+    {
+        return props.getProperty( HEADERSPLITCHAR, "," );
     }
 }
