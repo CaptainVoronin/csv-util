@@ -79,7 +79,7 @@ public class Config {
 
     public char getLinebreak()
     {
-        return props.getProperty( LINEBREAK, "\r" ).charAt( 0 );
+        return props.getProperty( LINEBREAK, "\n" ).charAt( 0 );
     }
 
     public IParserWrapper.ParserType getParserType()

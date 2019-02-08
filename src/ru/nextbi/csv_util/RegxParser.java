@@ -1,11 +1,7 @@
 package ru.nextbi.csv_util;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +17,7 @@ public class RegxParser extends AbstractParser {
     Pattern pattern;
     String replaceRegex;
 
-    InputStream stream;
+    Reader reader;
     boolean useSplit;
     boolean EOF;
     boolean hasHeaders;
@@ -45,13 +41,14 @@ public class RegxParser extends AbstractParser {
     }
 
     @Override
-    public void startParse(InputStream ins) {
+    public void startParse(InputStream ins) throws UnsupportedEncodingException {
         EOF = false;
         if (!useSplit) {
             pattern = Pattern.compile(regex);
         }
 
-        stream = ins;
+        InputStreamReader isr = new InputStreamReader(ins, "UTF8");
+        reader = new BufferedReader(isr);
     }
 
     @Override
@@ -115,21 +112,22 @@ public class RegxParser extends AbstractParser {
             return null;
 
         StringBuffer sb = new StringBuffer();
-        while ((b = stream.read()) != config.getLinebreak()) {
+
+        while ((b = reader.read()) != config.getLinebreak()) {
             if (b == -1) {
                 EOF = true;
                 break;
             }
             sb.append((char) b);
         }
-        return sb.toString().trim();
+            return sb.toString().trim();
     }
 
     @Override
     public void close() {
-        if (stream != null) {
+        if (reader != null) {
             try {
-                stream.close();
+                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

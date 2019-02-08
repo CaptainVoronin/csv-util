@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CSVUtil{
     Config config;
@@ -121,15 +122,22 @@ public class CSVUtil{
         List<String[]> rows = new ArrayList<>();
         if( config.hasHeaders() ) {
             String[] headers = parser.parseNext();
+
+            if( config.getDefaultReplaceRegex() != null ) {
+                List<String[]> list = new ArrayList<>();
+                list.add( headers );
+                sanitize(list);
+                for( int i = 0; i < headers.length; i++ )
+                   headers[i] = headers[i].trim();
+            }
+
             headersCount = headers.length;
             writer.writeHeaders( headers );
-
         }
 
         Integer[] cols = config.getSplitColumns();
         while( (row = parser.parseNext()) != null ) {
             rowCount++;
-
 
             if( headersCount > 0 && row.length > headersCount )
             {
@@ -210,4 +218,6 @@ public class CSVUtil{
         for( String[] row : rows )
             writer.writeRow(row);
     }
+
+
 }
