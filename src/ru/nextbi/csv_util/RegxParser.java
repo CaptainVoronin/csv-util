@@ -19,6 +19,8 @@ public class RegxParser extends AbstractParser {
 
     String regex;
     Pattern pattern;
+    String replaceRegex;
+
     InputStream stream;
     boolean useSplit;
     boolean EOF;
@@ -31,6 +33,7 @@ public class RegxParser extends AbstractParser {
         regex = config.getRegex();
         hasHeaders = config.hasHeaders();
         headersParsed = false;
+        replaceRegex = config.getDefaultReplaceRegex();
     }
 
     @Override
@@ -47,11 +50,7 @@ public class RegxParser extends AbstractParser {
         if (!useSplit) {
             pattern = Pattern.compile(regex);
         }
-/*
-        else if (regex == null)
-            // TODO: Это уже фигня, регулярка есть всегда
-            regex = String.format(stdPattern, getDelimiter());
-*/
+
         stream = ins;
     }
 
@@ -96,7 +95,6 @@ public class RegxParser extends AbstractParser {
             arr = new String[ list.size() ];
             list.toArray( arr );
         }
-
         return arr;
     }
 

@@ -34,6 +34,8 @@ public class Config {
 
     public static final String HEADERSPLITCHAR = "headersplitchar";
 
+    public static final String REPLACE = "replace";
+
     File file;
     Properties props;
 
@@ -144,4 +146,10 @@ public class Config {
     {
         return props.getProperty( HEADERSPLITCHAR, "," );
     }
+
+    public String getDefaultReplaceRegex()
+    {
+        return props.getProperty( REPLACE );
+    }
+
 }
