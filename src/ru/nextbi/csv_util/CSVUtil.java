@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class CSVUtil{
     Config config;
@@ -218,6 +217,5 @@ public class CSVUtil{
         for( String[] row : rows )
             writer.writeRow(row);
     }
-
 
 }
